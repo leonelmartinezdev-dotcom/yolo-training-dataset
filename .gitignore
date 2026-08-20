@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+dataset/
+runs/
+*.pt
+workspace/images/*
+workspace/labels/*
+!workspace/images/.gitkeep
+!workspace/labels/.gitkeep

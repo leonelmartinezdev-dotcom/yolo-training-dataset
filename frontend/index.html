@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>YOLO Local Annotator</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <div id="progress"></div>
+
+      <div id="image-list-wrap">
+        <ul id="image-list"></ul>
+      </div>
+
+      <div id="class-panel">
+        <h3>Clases</h3>
+        <ul id="class-list"></ul>
+      </div>
+
+      <div id="box-panel">
+        <h3>Cajas de esta imagen</h3>
+        <ul id="box-list"></ul>
+      </div>
+
+      <button id="export-btn">Exportar dataset</button>
+    </aside>
+
+    <main id="main">
+      <div id="toolbar">
+        <button id="prev-btn">&larr; Anterior (a)</button>
+        <span id="image-name"></span>
+        <button id="next-btn">Siguiente (d) &rarr;</button>
+        <span id="save-status"></span>
+      </div>
+
+      <div id="canvas-wrap">
+        <canvas id="canvas"></canvas>
+      </div>
+
+      <div id="hint-bar">
+        1-9,0 asignar clase &middot; Delete borrar caja &middot; a/d navegar (autosave) &middot; s guardar &middot;
+        Esc deseleccionar &middot; rueda zoom &middot; Space+drag pan &middot; [ ] ciclar clase
+      </div>
+    </main>
+  </div>
+
+  <div id="export-modal" class="hidden">
+    <div class="modal-content">
+      <h3>Exportar dataset</h3>
+      <label>Train % <input id="train-pct" type="number" value="80" min="0" max="100" /></label>
+      <label>Val % <input id="val-pct" type="number" value="20" min="0" max="100" /></label>
+      <label>Test % <input id="test-pct" type="number" value="0" min="0" max="100" /></label>
+      <div class="modal-actions">
+        <button id="export-confirm-btn">Exportar</button>
+        <button id="export-cancel-btn">Cancelar</button>
+      </div>
+      <pre id="export-result"></pre>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/canvas.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

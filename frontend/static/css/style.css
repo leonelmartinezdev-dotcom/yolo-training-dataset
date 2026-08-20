@@ -1,0 +1,240 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #1e1e1e;
+  color: #ddd;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#app {
+  display: flex;
+  height: 100vh;
+}
+
+#sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: #252526;
+  border-right: 1px solid #3a3a3a;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+#progress {
+  font-size: 13px;
+  margin-bottom: 8px;
+  color: #9c9c9c;
+}
+
+#image-list-wrap {
+  max-height: 30vh;
+  overflow-y: auto;
+  border-bottom: 1px solid #3a3a3a;
+  margin-bottom: 10px;
+}
+
+#image-list, #class-list, #box-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#image-list li, #box-list li {
+  padding: 4px 6px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#image-list li:hover, #box-list li:hover {
+  background: #2f2f2f;
+}
+
+#image-list li.active {
+  background: #094771;
+}
+
+#image-list li.labeled::before {
+  content: "\2713 ";
+  color: #4caf50;
+}
+
+#image-list li.pending::before {
+  content: "\25CB ";
+  color: #777;
+}
+
+#class-panel, #box-panel {
+  margin-bottom: 10px;
+}
+
+#class-panel h3, #box-panel h3 {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #888;
+  margin: 8px 0 4px;
+}
+
+#class-list li {
+  padding: 3px 6px;
+  font-size: 12px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#class-list li.selected {
+  background: #094771;
+}
+
+.box-color-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 6px;
+}
+
+.box-delete {
+  color: #e06c75;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0 4px;
+}
+
+#export-btn {
+  margin-top: auto;
+  padding: 8px;
+  background: #0e639c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#export-btn:hover {
+  background: #1177bb;
+}
+
+#main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+#toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #252526;
+  border-bottom: 1px solid #3a3a3a;
+  font-size: 13px;
+}
+
+#toolbar button {
+  background: #333;
+  color: #ddd;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+#toolbar button:hover {
+  background: #3d3d3d;
+}
+
+#image-name {
+  flex: 1;
+  color: #9c9c9c;
+}
+
+#save-status {
+  font-size: 12px;
+  color: #4caf50;
+}
+
+#save-status.dirty {
+  color: #e5c07b;
+}
+
+#canvas-wrap {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+}
+
+#canvas {
+  cursor: crosshair;
+  background: #000;
+}
+
+#hint-bar {
+  padding: 6px 12px;
+  font-size: 11px;
+  color: #777;
+  background: #252526;
+  border-top: 1px solid #3a3a3a;
+}
+
+#export-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#export-modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #2b2b2b;
+  padding: 20px;
+  border-radius: 6px;
+  min-width: 280px;
+}
+
+.modal-content label {
+  display: block;
+  margin: 8px 0;
+  font-size: 13px;
+}
+
+.modal-content input {
+  width: 80px;
+  margin-left: 8px;
+}
+
+.modal-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.modal-actions button {
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+#export-result {
+  margin-top: 10px;
+  font-size: 12px;
+  white-space: pre-wrap;
+}
