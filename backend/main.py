@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -5,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from backend.config import (
     CLASSES_FILE,
     FRONTEND_DIR,
+    EXPORT_LABELS_DIR,
     IMAGES_DIR,
     LABELS_DIR,
     OUTPUT_DIR,
@@ -90,12 +93,29 @@ def put_annotations(filename: str, payload: AnnotationPayload) -> AnnotationPayl
     return AnnotationPayload(boxes=read_boxes(label_path))
 
 
+def _resolve_export_labels() -> tuple[Path, list[str]]:
+    """Elige el directorio de etiquetas del export y detecta si quedó desactualizado.
+
+    Prefiere las fusionadas (manual + pseudo-COCO). Si no existen todavía, cae a las
+    manuales para no romper el flujo, pero eso entrena solo con lo etiquetado a mano.
+    """
+    if not EXPORT_LABELS_DIR.is_dir():
+        return LABELS_DIR, []
+    stale = []
+    for manual in sorted(LABELS_DIR.glob("*.txt")):
+        merged = EXPORT_LABELS_DIR / manual.name
+        if not merged.exists() or merged.stat().st_mtime < manual.stat().st_mtime:
+            stale.append(manual.name)
+    return EXPORT_LABELS_DIR, stale
+
+
 @app.post("/api/export")
 def post_export(req: ExportRequest) -> ExportResult:
     classes = read_classes(CLASSES_FILE)
-    return export_dataset(
+    labels_dir, stale = _resolve_export_labels()
+    result = export_dataset(
         images_dir=IMAGES_DIR,
-        labels_dir=LABELS_DIR,
+        labels_dir=labels_dir,
         classes=classes,
         output_dir=OUTPUT_DIR,
         train_pct=req.train_pct,
@@ -103,3 +123,6 @@ def post_export(req: ExportRequest) -> ExportResult:
         test_pct=req.test_pct,
         seed=req.seed,
     )
+    result.labels_source = str(labels_dir)
+    result.stale_labels = stale
+    return result

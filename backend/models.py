@@ -42,3 +42,9 @@ class ExportResult(BaseModel):
     skipped_unlabeled: int
     classes: list[str]
     output_dir: str
+    # De qué directorio salieron las etiquetas: las fusionadas (labels_auto) o las
+    # manuales sueltas. Exportar desde las manuales le borra al modelo las clases COCO.
+    labels_source: str = ""
+    # Etiquetas manuales editadas después de la última corrida de pseudolabel.py:
+    # sus cambios NO están en el export.
+    stale_labels: list[str] = []

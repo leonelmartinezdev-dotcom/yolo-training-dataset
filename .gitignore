@@ -1,4 +1,5 @@
 .venv/
+venv
 __pycache__/
 *.pyc
 dataset/
@@ -6,5 +7,6 @@ runs/
 *.pt
 workspace/images/*
 workspace/labels/*
+workspace/labels_auto/
 !workspace/images/.gitkeep
 !workspace/labels/.gitkeep
